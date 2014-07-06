@@ -2,10 +2,12 @@
 public class bingoBoard{
 	int boardWidth;
 	int[][] bingoArray; 
+	boolean[][] numbersCalledArray;
 	
 	public bingoBoard(int[][] inBingoArray, int inBoardWidth){
 		boardWidth=inBoardWidth;
 		bingoArray=new int[boardWidth][boardWidth];
+		numbersCalledArray=new boolean[boardWidth][boardWidth];
 		for(int i = 0; i < boardWidth; i++){
 			for(int j = 0; j < boardWidth; j++){
 				bingoArray[i][j]=inBingoArray[i][j];
@@ -16,6 +18,7 @@ public class bingoBoard{
 	public bingoBoard(String str0, String str1, String str2, String str3, String str4, int inBoardWidth){
 		boardWidth = inBoardWidth;
 		bingoArray=new int[boardWidth][boardWidth];
+		numbersCalledArray=new boolean[boardWidth][boardWidth];
 		String[] split0 = str0.split(" ");
 		String[] split1 = str1.split(" ");
 		String[] split2 = str2.split(" ");
@@ -33,13 +36,17 @@ public class bingoBoard{
 		return bingoArray[x][y];
 	}
 	
+	public boolean getStatus(int x, int y){
+		return numbersCalledArray[x][y];
+	}
+	
 	public void valueCalled(int numberRead){
 		System.out.println(numberRead);
 		for(int i = 0; i < boardWidth; i++){
 			for(int j = 0; j < boardWidth; j++){
 				if(bingoArray[i][j] == numberRead){
 					System.out.println("Found!");
-					bingoArray[i][j] = -1;
+					numbersCalledArray[i][j] = true;
 				}
 			}
 		}
@@ -47,6 +54,10 @@ public class bingoBoard{
 	
 	public void setValue(int x, int y, int value){
 		bingoArray[x][y]=value;
+	}
+	
+	public void setValue(int x, int y, boolean value){
+		numbersCalledArray[x][y]=value;
 	}
 	
 	public boolean getGameStatus(){
@@ -66,7 +77,7 @@ public class bingoBoard{
 		for(int y = 0; y < boardWidth; y++){
 			boolean status = true;
 			for(int x = 0; x < boardWidth; x++){
-				if(bingoArray[x][y] != -1){
+				if(numbersCalledArray[x][y] != true){
 					status = false;
 				}
 			}
@@ -81,7 +92,7 @@ public class bingoBoard{
 		for(int x = 0; x < boardWidth; x++){
 			boolean status = true;
 			for(int y = 0; y < boardWidth; y++){
-				if(bingoArray[x][y] != -1){
+				if(numbersCalledArray[x][y] != true){
 					status = false;
 				}
 			}
@@ -95,7 +106,7 @@ public class bingoBoard{
 	private boolean isDiagonalWin(){
 		boolean status = true;
 		for(int i = 0; i < boardWidth; i++){
-			if(bingoArray[i][i] != -1){
+			if(numbersCalledArray[i][i] != true){
 				status = false;
 			}
 		}
@@ -108,7 +119,7 @@ public class bingoBoard{
 		for(int i = 0; i < 5; i++){
 			int tempX = x-i;
 			int tempY = y+i;
-			if(bingoArray[tempX][tempY] != -1){
+			if(numbersCalledArray[tempX][tempY] != true){
 				status = false;
 			}
 		}

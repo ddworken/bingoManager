@@ -3,7 +3,7 @@ import java.util.Random;
 import java.util.ArrayList;
 
 
-public class bingoAI extends ConsoleProgram{
+public class bingoManager extends ConsoleProgram{
 	Random generator = new Random();
 	int boardWidth = 5;
 	int numberOfBoards;
